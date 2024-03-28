@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +8,43 @@
     <link href="style.css" rel="stylesheet">
     <title>Calculator</title>
 </head>
+
 <body>
-    <h1>CAL<span class="title-middle">...</span>CU<span class="title-middle">...</span>LATE<span class="title-end">EE</span></h1>
-    <div id="n7">7</div>
-    <div id="n8">8</div>
-    <div id="n9">9</div>
-    <div id="n4">4</div>
-    <div id="n5">5</div>
-    <div id="n6">6</div>
-    <div id="n1">1</div>
-    <div id="n2">2</div>
-    <div id="n3">3</div>
-    <div id="n0">0</div>
-    <div id="o+">+</div>
-    <div id="o-">-</div>
-    <div id="o/">/</div>
-    <div id="o*">*</div>
-    <div id="o=">=</div>
-    <div id="o.">.</div>
+    <div id="container">
+        <h1>CAL<span class="title-middle">...</span>CU<span class="title-middle">...</span>LATE<span
+                class="title-end">EE</span></h1>
+        <div id="calculator">
+            <div id="display">"numbers go here"</div>
+            <div id="calculator-buttons">
+                <div id="numpad">
+                    <div class="button-row">
+                        <div id="n7" class="number-key button">7</div>
+                        <div id="n8" class="number-key button">8</div>
+                        <div id="n9" class="number-key button">9</div>
+                    </div>
+                    <div class="button-row">
+                        <div id="n4" class="number-key button">4</div>
+                        <div id="n5" class="number-key button">5</div>
+                        <div id="n6" class="number-key button">6</div>
+                    </div>
+                    <div class="button-row">
+                        <div id="n1" class="number-key button">1</div>
+                        <div id="n2" class="number-key button">2</div>
+                        <div id="n3" class="number-key button">3</div>
+                    </div>
+                    <div id="n0" class="number-key button">0</div>
+                </div>
+                <div id="clear-entry" class="clear button">CLEAR</div>
+                        <div id="clear-all" class="clear button">CLEAR ALL</div>
+                        <div id="o+" class="operand button">+</div>
+                        <div id="o-" class="operand button">-</div>
+                        <div id="o/" class="operand button">/</div>
+                        <div id="o*" class="operand button">*</div>
+                        <div id="o=" class="operand button">=</div>
+                        <div id="o." class="operand button">.</div>
+
+                    </div>
+                </div>
 </body>
+
 </html>

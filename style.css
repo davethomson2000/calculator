@@ -7,6 +7,42 @@ h1 {
     font-family: "Orbitron", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+#container, #numpad {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .title-end {
     font-size: 22px;
+}
+
+.clear {
+    font-size: 12px;
+}
+
+#calculator {
+    border-style:outset;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.button {
+    border-style:outset;
+    border-radius: 4px;
+    text-align: center;
+}
+
+#display {
+    border-style:inset;
+    border-radius: 2px;
 }
