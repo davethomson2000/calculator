@@ -11,40 +11,60 @@
 
 <body>
     <div id="container">
-        <h1>CAL<span class="title-middle">...</span>CU<span class="title-middle">...</span>LATE<span
-                class="title-end">EE</span></h1>
+        <h1>CAL<span hidden class="title-middle error">...</span>CU<span hidden
+                class="title-middle error">...</span>LATE<span hidden class="title-end error">EE</span></h1>
         <div id="calculator">
-            <div id="display">"numbers go here"</div>
+            <div id="display">
+                <div id="display-memory">memory here</div>
+
+                <div id="display-result">numbers go here</div>
+
+            </div>
             <div id="calculator-buttons">
                 <div id="numpad">
-                    <div class="button-row">
-                        <div id="n7" class="number-key button">7</div>
-                        <div id="n8" class="number-key button">8</div>
-                        <div id="n9" class="number-key button">9</div>
+                    <div id="top">
+                        <div id="left">
+                            <div class="button-row">
+                                <div id="clear-entry" class="clear button operand">CLEAR</div>
+                                <div id="clear-all" class="clear button operand">CLEAR ALL</div>
+                                <div id="o/" class="operand button">/</div>
+                            </div>
+                            <div class="button-row">
+                                <div id="n7" class="number-key button">7</div>
+                                <div id="n8" class="number-key button">8</div>
+                                <div id="n9" class="number-key button">9</div>
+                            </div>
+                            <div class="button-row">
+                                <div id="n4" class="number-key button">4</div>
+                                <div id="n5" class="number-key button">5</div>
+                                <div id="n6" class="number-key button">6</div>
+                            </div>
+                            <div class="button-row">
+                                <div id="n1" class="number-key button">1</div>
+                                <div id="n2" class="number-key button">2</div>
+                                <div id="n3" class="number-key button">3</div>
+                            </div>
+                        </div>
+                        <div id="right">
+                            <div id="multiply" class="operand button">*</div>
+                            <div id="minus" class="operand button">-</div>
+                            <div id="plus" class="operand button">+</div>
+                        </div>
                     </div>
-                    <div class="button-row">
-                        <div id="n4" class="number-key button">4</div>
-                        <div id="n5" class="number-key button">5</div>
-                        <div id="n6" class="number-key button">6</div>
+                    <div id="bottom" class="button-row">
+                        <div id="n0" class="number-key button">0</div>
+                        <div id="decimal" class="operand button">.</div>
+                        <div id="equals" class="operand button">=</div>
                     </div>
-                    <div class="button-row">
-                        <div id="n1" class="number-key button">1</div>
-                        <div id="n2" class="number-key button">2</div>
-                        <div id="n3" class="number-key button">3</div>
-                    </div>
-                    <div id="n0" class="number-key button">0</div>
                 </div>
-                <div id="clear-entry" class="clear button">CLEAR</div>
-                        <div id="clear-all" class="clear button">CLEAR ALL</div>
-                        <div id="o+" class="operand button">+</div>
-                        <div id="o-" class="operand button">-</div>
-                        <div id="o/" class="operand button">/</div>
-                        <div id="o*" class="operand button">*</div>
-                        <div id="o=" class="operand button">=</div>
-                        <div id="o." class="operand button">.</div>
 
-                    </div>
-                </div>
+
+
+
+
+
+            </div>
+        </div>
 </body>
 
 </html>
