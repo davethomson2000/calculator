@@ -106,11 +106,16 @@ h1 {
 }
 
 #display-result {
-    font-size: 36px;
+    font-size: 60px;
+    min-height: 80px;
+    text-align: right;
+    padding: 1px 6px;
 }
 
 #display-memory {
     font-size: 12px;
+    min-height: 15px;
+    padding: 1px 6px
 }
 
 #spacer {
