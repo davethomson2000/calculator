@@ -2,14 +2,11 @@ let runningTotal = 0
 let inputNumber = 0
 let inputString = "0"
 let currentOperand = ""
-let entryHistory = "0 + 0 = 0"
+let historyString = ""
 
 const mainDisplay = document.querySelector("#display-result")
 const memoryDisplay = document.querySelector('#display-memory')
 const calculator = document.querySelector("#calculator")
-
-memoryDisplay.textContent = entryHistory
-mainDisplay.textContent = inputString
 
 document.addEventListener("keypress", handleKeyPress)
 
@@ -19,17 +16,62 @@ for (let button of buttons) {
     button.addEventListener("click", handleButtonPress)
 }
 
-function handleButtonPress (event) {
+// Initialize
+updateDisplay()
+
+function handleButtonPress(event) {
     let buttonPressed = event.target.textContent
     console.log(buttonPressed)
     if (isNaN(buttonPressed)) // is not a number
-        console.log("not a number")
+        handleOtherInput(buttonPressed)
     else
-        console.log("is a number")
+        handleNumberInput(buttonPressed)
 }
 
 function handleKeyPress(event) {
-    console.log(event.key)
-    inputString += event.key
+    let buttonPressed = event.key
+    if (isNaN(buttonPressed)) // is not a number
+        handleOtherInput(buttonPressed)
+    else
+        handleNumberInput(buttonPressed)
+}
+
+function handleNumberInput(numberText) {
+    if (inputString === "0")
+        inputString = numberText
+    else
+        inputString = inputString + numberText;
+    updateDisplay()
+}
+
+function handleOtherInput(otherText) {
+    switch (otherText) {
+        case "*":
+        case "/":
+        case "+":
+        case "-":
+        case "CLEAR":
+        case "CLEAR ALL":
+            clearAll()
+            break
+        case ".":
+            break
+    }
+}
+
+function updateDisplay() {
+    memoryDisplay.textContent = historyString
     mainDisplay.textContent = inputString
 }
+
+function clearAll() {
+    inputString = "0"
+    historyString = ""
+    updateDisplay()
+}
+
+function clear() {
+
+}
+
+
