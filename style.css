@@ -1,10 +1,11 @@
-body {
+html, body {
     font-family: "Orbitron", sans-serif;
     font-optical-sizing: auto;
+    min-height: 99dvh;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
-    height: 100vh;
 }
 
 h1 {
@@ -17,15 +18,17 @@ h1 {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    flex-basis: 0   0   auto;
+    flex-basis: auto;
 }
 
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: stretch;
     align-items: center;
-    box-sizing: border-box;
+    box-sizing: border-box; 
+    min-height: 100%;
+    flex: 1 0 auto
 }
 
 
@@ -96,7 +99,6 @@ h1 {
 #display {
     border-style:inset;
     border-radius: 2px;
-
     width:260px;
     background-color: rgba(140, 255, 18, 0.314);
     margin: 6.6px;
@@ -111,10 +113,15 @@ h1 {
     font-size: 12px;
 }
 
+#spacer {
+
+    flex: 1 1 10px;
+}
+
 #warning {
     font-size: 10px;
     flex-basis: 0 0 auto;
     justify-self: flex-end;
-    margin-top: auto;
+    
     height: 10px;
 }
