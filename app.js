@@ -26,30 +26,23 @@ function handleButtonPress(buttonPressed) {
         handleNumberInput(buttonPressed)
 }
 
-function handleNumberInput(numberText) {
-    if (Number(inputString) === 0)
-        inputString = numberText
+function handleNumberInput(buttonPressed) {
+    if (!Number(inputString))
+        inputString = buttonPressed
     else
-        inputString = inputString + numberText;
-    updateDisplay()
+        inputString = inputString + buttonPressed;
+    
+    mainDisplay.textContent = inputString
 }
 
-function handleOtherInput(otherText) {
-    //if most recent input was an operand, save that as current operand
-    if (operands.includes(otherText))
-        currentOperand = otherText
-        
-    const operandFunctions = {
-        "=" : equalsTotal,
-        "Enter": equalsTotal,
-        "CLEAR": clear,
-        "CLEAR ALL": clearAll,
-         "*": multiplyNumber,
-         "/": divideNumber,
-         "+": addNumber,
-         "-": subtractNumber,
-         ".": handleDecimal,
-    }
+function handleOtherInput(buttonPressed) {
+    //if most recent input was an operand, save that as current operand and handle
+    if (operands.includes(buttonPressed)) 
+        if (currentOperand) 
+            equalsTotal()
+        else
+            saveInputNumber()
+
     const specialFunctions = {
         "CLEAR": clear,
         "CLEAR ALL": clearAll,
@@ -60,7 +53,20 @@ function handleOtherInput(otherText) {
 
     //launch specified function for operand keys
     if (otherText in specialFunctions) 
-        specialFunctions[otherText]()
+        specialFunctions[buttonPressed]()
+}
+
+function saveInputNumber() {
+    if (Number(inputString))
+        inputNumber = Number(inputString)
+    
+    runningTotal = inputNumber
+    inputString = runningTotal
+    mainDisplay.textContent = inputString
+    //resetInput()
+    //updateDisplay()
+    console.log("running total "+ runningTotal)
+    console.log("input number "+ inputNumber)
 }
 
 function updateDisplay() {
@@ -71,51 +77,65 @@ function updateDisplay() {
 function resetInput() {
     inputNumber = 0
     inputString = "0"
-    currentOperand = "" 
 }
 
-function saveInputNumber(inputString) {
-    if (Number(inputString))
-        inputNumber = Number(inputString)
-    
-    
-    
-    updateDisplay()
+function resetOperand() {
+    currentOperand = ""
 }
+
+function resetHistory() {
+    historyString = ""
+}
+
 
 function clearAll() {
-    historyString = ""
     resetInput()
-    
+    resetOperand()
+    resetHistory()
     updateDisplay()
 }
 
 function clear() {}
 
-
-function multiplyNumber(otherText) {}
-            
-function divideNumber(otherText) {}
-            
-function addNumber(otherText) {}
-
-function subtractNumber(otherText) {}
-
 function handleDecimal() {}
 
 function equalsTotal() {
-    if (currentOperand)
+    if (Number(inputString))
+        inputNumber = Number(inputString)
 
-    updateDisplay()
-    resetInput()
+    switch(currentOperand) {
+        case "*":
+            runningTotal *= inputNumber
+            break
+        case "+":
+            runningTotal += inputNumber
+            break
+        case "-":
+            runningTotal -= inputNumber
+            break
+        case "/":
+            if (inputNumber === 0)
+                errorMode()
+            else
+                runningTotal = runningTotal / inputNumber
+            break
+    }
+    // round to 2 dps where necessary
+    runningTotal = Number(runningTotal.toFixed(2))
+    console.log("running total "+ runningTotal)
+    mainDisplay.textContent = runningTotal
+    inputNumber = runningTotal
+    inputString = String(runningTotal)
+    resetOperand()
 }
 
+function errorMode() {
+
+}
 
 // Initialize
 updateDisplay()
 
-saveInputNumber(1)
-saveInputNumber("1.5")
 
 
 
