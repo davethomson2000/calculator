@@ -46,15 +46,29 @@ function handleNumberInput(numberText) {
 
 function handleOtherInput(otherText) {
     switch (otherText) {
+        case "=":
+            equalsTotal(otherText)
+            break
         case "*":
+            multiplyNumber(otherText)
+            break
         case "/":
+            divideNumber(otherText)
+            break
         case "+":
+            addNumber(otherText)
+            break
         case "-":
+            subtractNumber(otherText)
+            break
         case "CLEAR":
+            clear(otherText)
+            break
         case "CLEAR ALL":
-            clearAll()
+            clearAll(otherText)
             break
         case ".":
+            handleDecimal(otherText)
             break
     }
 }
