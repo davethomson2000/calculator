@@ -8,26 +8,16 @@ const mainDisplay = document.querySelector("#display-result")
 const memoryDisplay = document.querySelector('#display-memory')
 const calculator = document.querySelector("#calculator")
 
-document.addEventListener("keypress", handleKeyPress)
+document.addEventListener("keypress", (event) => handleButtonPress(event.key))
 
 const buttons = document.querySelectorAll(".button")
 for (let button of buttons) {
     console.log(button)
-    button.addEventListener("click", handleButtonPress)
+    button.addEventListener("click", (event) => handleButtonPress(event.target.textContent))
 }
 
 
-function handleButtonPress(event) {
-    let buttonPressed = event.target.textContent
-    console.log(buttonPressed)
-    if (isNaN(buttonPressed)) // is not a number
-        handleOtherInput(buttonPressed)
-    else
-        handleNumberInput(buttonPressed)
-}
-
-function handleKeyPress(event) {
-    let buttonPressed = event.key
+function handleButtonPress(buttonPressed) {
     console.log(buttonPressed)
     if (isNaN(buttonPressed)) // is not a number
         handleOtherInput(buttonPressed)
@@ -70,19 +60,30 @@ function updateDisplay() {
     mainDisplay.textContent = inputString
 }
 
+function resetInput() {
+    inputNumber = 0
+    inputString = "0"
+    currentOperand = "" 
+}
+
 function saveInputNumber(inputString) {
     if (Number(inputString))
         inputNumber = Number(inputString)
+    
+    
+    
     updateDisplay()
 }
 
 function clearAll() {
-    inputString = "0"
     historyString = ""
+    resetInput()
+    
     updateDisplay()
 }
 
 function clear() {}
+
 
 function multiplyNumber(otherText) {}
             
