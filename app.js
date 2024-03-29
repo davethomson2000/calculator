@@ -16,8 +16,6 @@ for (let button of buttons) {
     button.addEventListener("click", handleButtonPress)
 }
 
-// Initialize
-updateDisplay()
 
 function handleButtonPress(event) {
     let buttonPressed = event.target.textContent
@@ -30,6 +28,7 @@ function handleButtonPress(event) {
 
 function handleKeyPress(event) {
     let buttonPressed = event.key
+    console.log(buttonPressed)
     if (isNaN(buttonPressed)) // is not a number
         handleOtherInput(buttonPressed)
     else
@@ -37,7 +36,7 @@ function handleKeyPress(event) {
 }
 
 function handleNumberInput(numberText) {
-    if (inputString === "0")
+    if (Number(inputString) === 0)
         inputString = numberText
     else
         inputString = inputString + numberText;
@@ -45,37 +44,36 @@ function handleNumberInput(numberText) {
 }
 
 function handleOtherInput(otherText) {
-    switch (otherText) {
-        case "=":
-            equalsTotal(otherText)
-            break
-        case "*":
-            multiplyNumber(otherText)
-            break
-        case "/":
-            divideNumber(otherText)
-            break
-        case "+":
-            addNumber(otherText)
-            break
-        case "-":
-            subtractNumber(otherText)
-            break
-        case "CLEAR":
-            clear(otherText)
-            break
-        case "CLEAR ALL":
-            clearAll(otherText)
-            break
-        case ".":
-            handleDecimal(otherText)
-            break
+    const operandFunctions = {
+        "=" : equalsTotal,
+        "CLEAR": clear,
+        "CLEAR ALL": clearAll,
+         "=": equalsTotal,
+         "Enter": equalsTotal,
+         "*": multiplyNumber,
+         "/": divideNumber,
+         "+": addNumber,
+         "-": subtractNumber,
+         ".": handleDecimal,
     }
+    const specialFunctions = {
+        
+    }
+
+    //launch specified function for operand keys
+    if (otherText in operandFunctions) 
+        operandFunctions[otherText]()
 }
 
 function updateDisplay() {
     memoryDisplay.textContent = historyString
     mainDisplay.textContent = inputString
+}
+
+function saveInputNumber(inputString) {
+    if (Number(inputString))
+        inputNumber = Number(inputString)
+    updateDisplay()
 }
 
 function clearAll() {
@@ -84,8 +82,28 @@ function clearAll() {
     updateDisplay()
 }
 
-function clear() {
+function clear() {}
 
+function multiplyNumber(otherText) {}
+            
+function divideNumber(otherText) {}
+            
+function addNumber(otherText) {}
+
+function subtractNumber(otherText) {}
+
+function handleDecimal() {}
+
+function equalsTotal() {
+    
 }
+
+
+// Initialize
+updateDisplay()
+
+saveInputNumber(1)
+saveInputNumber("1.5")
+
 
 
