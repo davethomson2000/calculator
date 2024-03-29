@@ -3,19 +3,20 @@ let inputNumber = 0
 let inputString = "0"
 let currentOperand = ""
 let historyString = ""
+const operands = ["*", "/", "+", "-"]
 
 const mainDisplay = document.querySelector("#display-result")
 const memoryDisplay = document.querySelector('#display-memory')
 const calculator = document.querySelector("#calculator")
 
-document.addEventListener("keypress", (event) => handleButtonPress(event.key))
-
+//event handle button clicks
 const buttons = document.querySelectorAll(".button")
 for (let button of buttons) {
     console.log(button)
     button.addEventListener("click", (event) => handleButtonPress(event.target.textContent))
 }
-
+//event handle keyboard presses
+document.addEventListener("keypress", (event) => handleButtonPress(event.key))
 
 function handleButtonPress(buttonPressed) {
     console.log(buttonPressed)
@@ -34,12 +35,15 @@ function handleNumberInput(numberText) {
 }
 
 function handleOtherInput(otherText) {
+    //if most recent input was an operand, save that as current operand
+    if (operands.includes(otherText))
+        currentOperand = otherText
+        
     const operandFunctions = {
         "=" : equalsTotal,
+        "Enter": equalsTotal,
         "CLEAR": clear,
         "CLEAR ALL": clearAll,
-         "=": equalsTotal,
-         "Enter": equalsTotal,
          "*": multiplyNumber,
          "/": divideNumber,
          "+": addNumber,
@@ -47,12 +51,16 @@ function handleOtherInput(otherText) {
          ".": handleDecimal,
     }
     const specialFunctions = {
-        
+        "CLEAR": clear,
+        "CLEAR ALL": clearAll,
+         "=": equalsTotal,
+         "Enter": equalsTotal,
+         ".": handleDecimal,
     }
 
     //launch specified function for operand keys
-    if (otherText in operandFunctions) 
-        operandFunctions[otherText]()
+    if (otherText in specialFunctions) 
+        specialFunctions[otherText]()
 }
 
 function updateDisplay() {
@@ -96,7 +104,10 @@ function subtractNumber(otherText) {}
 function handleDecimal() {}
 
 function equalsTotal() {
-    
+    if (currentOperand)
+
+    updateDisplay()
+    resetInput()
 }
 
 
