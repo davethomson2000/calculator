@@ -1,9 +1,10 @@
 let runningTotal = 0
-let inputNumber = 0
-let inputString = "0"
+let prevFinalTotal = 0
+let inputString = ""
 let currentOperand = ""
 let historyString = ""
 const operands = ["*", "/", "+", "-"]
+const errors = document.querySelectorAll(".error")
 
 const mainDisplay = document.querySelector("#display-result")
 const memoryDisplay = document.querySelector('#display-memory')
@@ -19,94 +20,110 @@ for (let button of buttons) {
 document.addEventListener("keypress", (event) => handleButtonPress(event.key))
 
 function handleButtonPress(buttonPressed) {
-    console.log(buttonPressed)
-    if (isNaN(buttonPressed)) // is not a number
-        handleOtherInput(buttonPressed)
+    if (isNaN(buttonPressed)) {
+        // is not a number
+        if (operands.includes(buttonPressed))
+            handleOperandInput(buttonPressed)
+        else
+            handleSpecialInput(buttonPressed)
+    }
     else
         handleNumberInput(buttonPressed)
 }
 
 function handleNumberInput(buttonPressed) {
-    if (!Number(inputString))
-        inputString = buttonPressed
-    else
-        inputString = inputString + buttonPressed;
-    
-    mainDisplay.textContent = inputString
+    inputString = inputString + buttonPressed;
+    updateDisplay(inputString)
 }
 
-function handleOtherInput(buttonPressed) {
-    //if most recent input was an operand, save that as current operand and handle
-    if (operands.includes(buttonPressed)) 
-        if (currentOperand) 
-            equalsTotal()
-        else
-            saveInputNumber()
+function handleOperandInput(buttonPressed) {
+    //if most recent input was an operand, and no new input, re-use recent total
+    if (inputString === "") {
+        if (!currentOperand)
+            inputString = prevFinalTotal
+        else inputString = "0"
+    }
+    addToHistory(inputString)
+    calculateRunningTotal()
+    saveOperand(buttonPressed)
+    updateDisplay(runningTotal)
+}
 
+function handleSpecialInput(buttonPressed) {
+    //launch specified function for special keys
     const specialFunctions = {
         "CLEAR": clear,
         "CLEAR ALL": clearAll,
-         "=": equalsTotal,
-         "Enter": equalsTotal,
-         ".": handleDecimal,
+        "=": equalsTotal,
+        "Enter": equalsTotal,
+        ".": handleDecimal,
     }
-
-    //launch specified function for operand keys
-    if (otherText in specialFunctions) 
+    if (buttonPressed in specialFunctions)
         specialFunctions[buttonPressed]()
 }
 
-function saveInputNumber() {
-    if (Number(inputString))
-        inputNumber = Number(inputString)
-    
-    runningTotal = inputNumber
-    inputString = runningTotal
-    mainDisplay.textContent = inputString
-    //resetInput()
-    //updateDisplay()
-    console.log("running total "+ runningTotal)
-    console.log("input number "+ inputNumber)
-}
-
-function updateDisplay() {
-    memoryDisplay.textContent = historyString
-    mainDisplay.textContent = inputString
-}
-
-function resetInput() {
-    inputNumber = 0
-    inputString = "0"
-}
-
-function resetOperand() {
-    currentOperand = ""
-}
-
-function resetHistory() {
-    historyString = ""
-}
-
-
-function clearAll() {
-    resetInput()
-    resetOperand()
-    resetHistory()
+function addToHistory(stringToAdd) {
+    historyString = historyString + ' ' + stringToAdd
     updateDisplay()
 }
 
-function clear() {}
+function saveOperand(buttonPressed) {
+    currentOperand = buttonPressed
+    addToHistory(buttonPressed)
+    updateDisplay()
+}
 
-function handleDecimal() {}
+function getValidNumber(inputString) {
+    let validNumber = 0
+    if (!isNaN(inputString))
+        validNumber = Number(Number(inputString).toFixed(3))
+    return validNumber
+}
 
-function equalsTotal() {
-    if (Number(inputString))
-        inputNumber = Number(inputString)
+function saveInputNumberToRunningTotal() {
+    runningTotal = getValidNumber(inputString)
+    updateDisplay(runningTotal)
+    inputString = ""
+}
 
-    switch(currentOperand) {
+function resetInput() {
+    inputString = ""
+}
+
+function resetOperand() { currentOperand = "" }
+
+function resetHistory() { historyString = "" }
+
+function clearAll() {
+    runningTotal = 0
+    for (let error of errors)
+        error.hidden = true
+    resetInput()
+    resetOperand()
+    resetHistory()
+    updateDisplay("0")
+
+}
+
+function clear() {
+    inputString = inputString.slice(0, inputString.length - 1)
+    updateDisplay(inputString)
+}
+
+function handleDecimal() {
+    if (!inputString.includes("."))
+        inputString += "."
+    updateDisplay(inputString)
+}
+
+function calculateRunningTotal() {
+    let inputNumber = getValidNumber(inputString)
+
+    switch (currentOperand) {
         case "*":
             runningTotal *= inputNumber
             break
+        case "":
         case "+":
             runningTotal += inputNumber
             break
@@ -114,27 +131,50 @@ function equalsTotal() {
             runningTotal -= inputNumber
             break
         case "/":
-            if (inputNumber === 0)
+            if (inputNumber === 0) {
                 errorMode()
+                return false
+            }
             else
                 runningTotal = runningTotal / inputNumber
             break
     }
     // round to 2 dps where necessary
-    runningTotal = Number(runningTotal.toFixed(2))
-    console.log("running total "+ runningTotal)
-    mainDisplay.textContent = runningTotal
-    inputNumber = runningTotal
-    inputString = String(runningTotal)
+    runningTotal = getValidNumber(runningTotal)
+    inputString = ""
+    updateDisplay(runningTotal)
+}
+
+function equalsTotal() {
+    addToHistory(inputString)
+    calculateRunningTotal()
+    resetHistory()
+    resetInput()
     resetOperand()
+
+    prevFinalTotal = runningTotal
+    runningTotal = 0
+}
+
+function updateDisplay(mainDisplayText) {
+    memoryDisplay.textContent = historyString
+    if (mainDisplayText != undefined)
+        mainDisplay.textContent = mainDisplayText
 }
 
 function errorMode() {
-
+    runningTotal = 0
+    console.log("error mode")
+    mainDisplay.textContent = "(✖﹏✖)"
+    for (let error of errors)
+        error.hidden = false
+    setTimeout(clearAll, 4000)
 }
 
+
+
 // Initialize
-updateDisplay()
+updateDisplay(0)
 
 
 

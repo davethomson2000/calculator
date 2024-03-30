@@ -103,6 +103,7 @@ h1 {
     background-color: rgba(140, 255, 18, 0.314);
     margin: 6.6px;
     box-sizing: border-box;
+    word-wrap: break-word;
 }
 
 #display-result {
