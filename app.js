@@ -62,6 +62,15 @@ function handleSpecialInput(buttonPressed) {
         specialFunctions[buttonPressed]()
 }
 
+function handleDecimal() {
+    if (inputString.includes("."))
+        return False    
+    else
+        //add leading zero if no input so far
+        inputString = (inputString || "0") + "."
+    updateDisplay(inputString)
+}
+
 function addToHistory(stringToAdd) {
     historyString = historyString + ' ' + stringToAdd
     updateDisplay()
@@ -76,7 +85,7 @@ function saveOperand(buttonPressed) {
 function getValidNumber(inputString) {
     let validNumber = 0
     if (!isNaN(inputString))
-        validNumber = Number(Number(inputString).toFixed(3))
+        validNumber = Number(Number(inputString).toFixed(4))
     return validNumber
 }
 
@@ -107,15 +116,6 @@ function clearAll() {
 
 function clear() {
     inputString = inputString.slice(0, inputString.length - 1)
-    updateDisplay(inputString)
-}
-
-function handleDecimal() {
-    if (inputString.includes("."))
-        return False    
-    else
-        //add leading zero if no input so far
-        inputString = (inputString || "0") + "."
     updateDisplay(inputString)
 }
 
