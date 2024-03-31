@@ -111,8 +111,11 @@ function clear() {
 }
 
 function handleDecimal() {
-    if (!inputString.includes("."))
-        inputString += "."
+    if (inputString.includes("."))
+        return False    
+    else
+        //add leading zero if no input so far
+        inputString = (inputString || "0") + "."
     updateDisplay(inputString)
 }
 
