@@ -43,7 +43,7 @@ function handleOperandInput(buttonPressed) {
             inputString = prevFinalTotal
         else inputString = "0"
     }
-    addToHistory(inputString)
+    addToHistory(getValidNumber(inputString))
     calculateRunningTotal()
     saveOperand(buttonPressed)
     updateDisplay(runningTotal)
@@ -87,12 +87,6 @@ function getValidNumber(inputString) {
     if (!isNaN(inputString))
         validNumber = Number(Number(inputString).toFixed(4))
     return validNumber
-}
-
-function saveInputNumberToRunningTotal() {
-    runningTotal = getValidNumber(inputString)
-    updateDisplay(runningTotal)
-    inputString = ""
 }
 
 function resetInput() {
@@ -149,7 +143,7 @@ function calculateRunningTotal() {
 }
 
 function equalsTotal() {
-    addToHistory(inputString)
+    addToHistory(getValidNumber(inputString))
     calculateRunningTotal()
     resetHistory()
     resetInput()
